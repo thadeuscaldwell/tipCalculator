@@ -14,12 +14,12 @@ h1 {
 .flex-container {
     display: flex;
     border: left 0;
-
+    align-items: center;
 }
 
 .flex-column {
     flex-direction: column;
-    background-color: brown;
+    /* background-color: slategrey; */
 
 }
 
@@ -93,5 +93,11 @@ h1 {
 
 .board {
     width: 618px;
+    align-items: center;
+    border-left-color: yellow;
 
+}
+#resetButton {
+    align-items: center;
+    margin-left: 320px;
 }
