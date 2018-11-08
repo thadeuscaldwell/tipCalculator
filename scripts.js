@@ -13,11 +13,14 @@ let reset = $("#resetButton")
 $(document).ready(function () {
 
 
-            reset.click(function () {
-                reset.css("display", "block");
-                p1Score += p1Score
-                p2Score += p2Score
-
+            reset.click(function (e) {
+                // console.log("reset ")
+                // reset.css("display", "block");
+                
+                let moves = Array.prototype.slice.call($(".square"));
+                moves.map((m) => {
+                    m.innerHTML = "";
+                }  )
             });
 
 
@@ -26,9 +29,10 @@ $(document).ready(function () {
 
 
 
-            sqr.one("click", function (e) {
+            sqr.on("click", function (e) {
+             
                 movesMade++
-                if (currentTurn % 2 === 1) {
+                if (currentTurn % 2 === 1 &&  event.target.innerHTML ==="") {
                     event.target.innerHTML = player1;
                     event.target.style.color = "red";
 
@@ -39,7 +43,9 @@ $(document).ready(function () {
                     event.target.style.color = "blue";
                     currentTurn--;
                 }
+
                 if (checkForWinner()) {
+                    console.log("inside winner function")
                     winner = currentTurn == 1 ? player2 : player1;
                     declareWinner(winner)
                 };
@@ -55,26 +61,32 @@ $(document).ready(function () {
 
                 $('#player1Score').val(p1Score)
                 $('#player2Score').val(p2Score)
-                p1Score += p1Score
-                p2Score += p2Score
+                if(localStorage){ // check that local storage is available
+                    
+                    localStorage["p1Score"] = 
+                    $('#player1Score').val(p1Score)  // save both scores
+                
+                    localStorage["p2Score"] =  $('#player2Score').val(p2Score)
+                }
 
 
 
             }
 
             function checkForWinner() {
-                reset.on("click", (e) => {
-                    let moves = Array.prototype.slice.call($(".square"));
-                    moves.map((m) => {
-                        m.innerHTML = "";
-                    });
+                // reset.on("click", (e) => {
+                //     let moves = Array.prototype.slice.call($(".square"));
+                //     moves.map((m) => {
+                //         m.innerHTML = "";
+                //     });
                     if (movesMade > 4) {
+                        console.log("inside win")
                         let square = $(".square");
                         let moves = Array.prototype.slice.call($(".square"));
                         let results = moves.map(function (square) {
                             return square.innerHTML;
                         });
-                    }
+                    
                     let Win = [
                         [0, 1, 2],
                         [3, 4, 5],
@@ -93,7 +105,7 @@ $(document).ready(function () {
                             return false;
                         }
                     });
-                })
+                }
             }
         })
     
